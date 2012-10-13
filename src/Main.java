@@ -71,6 +71,8 @@ public class Main {
 			int turn = 0;
 			Board board = new Board();
 			Set set = new Set();
+			
+			writers[1].write("Make first move.");
 			while (true) {
 				Piece piece = Piece.stringToPeace(readers[turn++ % 2].readLine());
 				if (!set.remove(piece)) {
@@ -89,16 +91,12 @@ public class Main {
 				}
 				writers[(turn+1) % 2].write(position + "\n");
 				writers[turn % 2].flush();
-				if (board.gameOver()) {
+				if (board.gameOver() || set.isEmpty()) {
+					writers[turn%2].write("Victory");
+					writers[(turn+1)%2].write("Defeat");
 					p1.destroy();
 					p2.destroy();
 					results[turn % 2]++;
-					break;
-				}
-				if (set.isEmpty()) {
-					p1.destroy();
-					p2.destroy();
-					results[2]++;
 					break;
 				}
 			}

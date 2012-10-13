@@ -44,8 +44,8 @@ public class Main {
 				"D:\\Dropbox\\Uni\\AI\\quarto.jar -g -p human -p random",};
 
 		//TODO: rewrite args parsing
-		String command1 = "java -jar " + args[0];
-		String command2 = "java -jar " + args[1];
+		String command1 = "java " + args[0];
+		String command2 = "java " + args[1];
 		
 		
 		for (int i = 0; i < args.length; i++) {
@@ -72,9 +72,13 @@ public class Main {
 			Board board = new Board();
 			Set set = new Set();
 			
-			writers[1].write("Make first move.");
+			writers[0].write("Make first move.");
+			String firstPiece = readers[0].readLine();
+			System.out.println("First piece: " + firstPiece);
+			Piece piece = Piece.stringToPeace(firstPiece);
+			writers[1].write(piece.toString());
 			while (true) {
-				Piece piece = Piece.stringToPeace(readers[turn++ % 2].readLine());
+				piece = Piece.stringToPeace(readers[turn++ % 2].readLine());
 				if (!set.remove(piece)) {
 					throw new Exception("Piece not in set");
 				}

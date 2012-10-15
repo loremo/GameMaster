@@ -75,16 +75,20 @@ public class Main {
 			writers[0].flush();
 			String firstPiece = readers[0].readLine();
 			Piece piece = Piece.stringToPeace(firstPiece);
-			writers[1].write(piece.toString());
+			if(piece == null){ throw new Exception("First player chose " + firstPiece + ". Could not parse.");}
+			writers[1].write(piece.toString() + "\n");
+			writers[1].flush();
 			
-			int turn = 1;
+			int turn = 0;
 			while (true) {
-				piece = Piece.stringToPeace(readers[turn++ % 2].readLine());
+				turn++;
+				String nextPiece = readers[turn % 2].readLine();
+				piece = Piece.stringToPeace(nextPiece);
 				if (!set.remove(piece)) {
 					throw new Exception("Piece not in set");
 				}
-				writers[turn % 2].write(piece + "\n");
-				writers[turn % 2].flush();
+				writers[(turn+1) % 2].write(piece + "\n");
+				writers[(turn+1) % 2].flush();
 				String position = readers[turn % 2].readLine();
 				Action action = getPosition(piece, position);
 				if (!board.isEmpty(action.x, action.y)) {
@@ -95,7 +99,7 @@ public class Main {
 					System.out.println(board);
 				}
 				writers[(turn+1) % 2].write(position + "\n");
-				writers[turn % 2].flush();
+				writers[(turn+1) % 2].flush();
 				if (board.gameOver() || set.isEmpty()) {
 					writers[turn%2].write("Victory");
 					writers[(turn+1)%2].write("Defeat");

@@ -68,15 +68,16 @@ public class Main {
 			writers[0] = new BufferedWriter(new OutputStreamWriter(p1.getOutputStream())); 
 			writers[1] = new BufferedWriter(new OutputStreamWriter(p2.getOutputStream())); 
 			
-			int turn = 0;
 			Board board = new Board();
 			Set set = new Set();
 			
-			writers[0].write("Make first move.");
+			writers[0].write("Make first move.\n");
+			writers[0].flush();
 			String firstPiece = readers[0].readLine();
-			System.out.println("First piece: " + firstPiece);
 			Piece piece = Piece.stringToPeace(firstPiece);
 			writers[1].write(piece.toString());
+			
+			int turn = 1;
 			while (true) {
 				piece = Piece.stringToPeace(readers[turn++ % 2].readLine());
 				if (!set.remove(piece)) {

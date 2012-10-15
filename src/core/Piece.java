@@ -70,7 +70,7 @@ public class Piece {
 	}
 
 	public static Piece stringToPeace(String input) {
-		String s = input.trim();
+		String s = input.replaceAll(" ","");
 		boolean square = true;
 		boolean solid = true;
 		boolean big = true;

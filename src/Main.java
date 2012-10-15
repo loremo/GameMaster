@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -12,7 +13,10 @@ import core.Set;
 
 public class Main {
 	
-	static public Action getPosition(Piece piece, String position) throws Exception {
+	static public Action getAction(BufferedReader reader) throws Exception {
+		String nextPiece = reader.readLine();
+		Piece piece = Piece.stringToPeace(nextPiece);
+		String position = reader.readLine();
 		int x = -1, y = -1;
 		ArrayList<String> inputs = new ArrayList<String>();
 		for (String string : position.split(" ")) {
@@ -82,15 +86,10 @@ public class Main {
 			int turn = 0;
 			while (true) {
 				turn++;
-				String nextPiece = readers[turn % 2].readLine();
-				piece = Piece.stringToPeace(nextPiece);
-				if (!set.remove(piece)) {
+				Action action = getAction(readers[turn%2]);
+				if (!set.remove(action.piece)) {
 					throw new Exception("Piece not in set");
 				}
-				writers[(turn+1) % 2].write(piece + "\n");
-				writers[(turn+1) % 2].flush();
-				String position = readers[turn % 2].readLine();
-				Action action = getPosition(piece, position);
 				if (!board.isEmpty(action.x, action.y)) {
 					throw new Exception("Wrong position");				
 				}
@@ -98,8 +97,7 @@ public class Main {
 				if (!quiet) {
 					System.out.println(board);
 				}
-				writers[(turn+1) % 2].write(position + "\n");
-				writers[(turn+1) % 2].flush();
+				writeAction(writers[(turn+1) % 2], action);
 				if (board.gameOver() || set.isEmpty()) {
 					writers[turn%2].write("Victory");
 					writers[(turn+1)%2].write("Defeat");
@@ -115,5 +113,11 @@ public class Main {
 		System.out.println(results[0] + "\t: 1. player");
 		System.out.println(results[1] + "\t: 2. player");
 		System.out.println(results[2] + "\t: ties");
+	}
+
+	private static void writeAction(BufferedWriter writer, Action action) throws IOException {
+		writer.write(action.piece + "\n");
+		writer.write(action.x + " " + action.y + "\n");
+		writer.flush();
 	}
 }

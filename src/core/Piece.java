@@ -70,6 +70,7 @@ public class Piece {
 	}
 
 	public static Piece stringToPeace(String input) {
+		if(input == null){ throw new RuntimeException("Received null piece.");}
 		String s = input.replaceAll(" ","");
 		boolean square = true;
 		boolean solid = true;

@@ -16,7 +16,6 @@ public class Main {
 	static public Action getAction(BufferedReader reader) throws Exception {
 		String nextPiece = reader.readLine();
 		Piece piece = Piece.stringToPeace(nextPiece);
-		System.out.println(piece);
 		String position = reader.readLine();
 		int x = -1, y = -1;
 		ArrayList<String> inputs = new ArrayList<String>();
@@ -64,6 +63,7 @@ public class Main {
 		System.out.println("command2: " + command2);
 		int[] results = new int[3];
 		for (int i = 0; i < rounds; i++) {
+			
 			Process p1=Runtime.getRuntime().exec(command1); 
 			Process p2=Runtime.getRuntime().exec(command2); 
 			BufferedReader[] readers = new BufferedReader[2];
@@ -99,17 +99,15 @@ public class Main {
 					System.out.println(board);
 				}
 				writeAction(writers[(turn+1) % 2], action);
-				if (board.gameOver() || set.isEmpty()) {
-					writers[turn%2].write("Victory");
-					writers[(turn+1)%2].write("Defeat");
+				if (board.gameOver()) {
+					writers[turn%2].write("Victory\n");
+					writers[(turn+1)%2].write("Defeat\n");
 					p1.destroy();
 					p2.destroy();
-					if(!set.isEmpty()){
-						results[turn % 2]++;
-					}else{
-						results[2]++;
-					}
 					break;
+				}
+				if(set.isEmpty()){
+					
 				}
 			}
 		}

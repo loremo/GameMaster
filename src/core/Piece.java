@@ -1,5 +1,7 @@
 package core;
 
+import java.util.HashSet;
+
 
 public class Piece {
 	public enum ATTRIBUTES {
@@ -35,6 +37,15 @@ public class Piece {
 			return true; 
 		}
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int ret = 0;
+		for (int i = 0; i < attributes.length; i++) {
+			ret += (attributes[i] ? Math.pow(2, i) : 0);
+		}
+		return ret;
 	}
 	
 	@Override
@@ -94,5 +105,15 @@ public class Piece {
 			return new Piece(big, red, square, solid);
 		}
 		return null;
+	}
+	
+	public static java.util.Set<Piece> getPieceSet(){
+		java.util.Set<Piece> ret = new HashSet<Piece>();
+		for (int i = 0; i < 16; i++) {
+			String binaryString = "000"+Integer.toBinaryString(i);
+			binaryString = binaryString.substring(binaryString.length()-4, binaryString.length());
+			ret.add(new Piece(binaryString.charAt(0) == '0', binaryString.charAt(1) == '0', binaryString.charAt(2) == '0', binaryString.charAt(3) == '0'));
+		}
+		return ret;
 	}
 }

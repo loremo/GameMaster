@@ -104,10 +104,16 @@ public class Main {
 					writers[(turn+1)%2].write("Defeat\n");
 					p1.destroy();
 					p2.destroy();
+					results[turn%2]++;
 					break;
 				}
 				if(set.isEmpty()){
-					
+					writers[0].write("Tie\n");
+					writers[1].write("Tie\n");
+					p1.destroy();
+					p2.destroy();
+					results[2]++;
+					break;
 				}
 			}
 		}

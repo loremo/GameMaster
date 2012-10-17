@@ -94,7 +94,8 @@ public class Main {
 				if (!board.isEmpty(action.x, action.y)) {
 					throw new Exception("Wrong position " + action.x + " " + action.y);				
 				}
-				board.setPiece(action.piece, action.x, action.y);
+				board.setPiece(piece, action.x, action.y);
+				piece = action.piece;
 				if (!quiet) {
 					System.out.println(board);
 				}

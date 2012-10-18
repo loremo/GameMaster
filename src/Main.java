@@ -14,9 +14,9 @@ import core.Piece;
 public class Main {
 
 	static public Action getAction(BufferedReader reader) throws Exception {
+		String position = reader.readLine();
 		String nextPiece = reader.readLine();
 		Piece piece = Piece.stringToPeace(nextPiece);
-		String position = reader.readLine();
 		int x = -1, y = -1;
 		ArrayList<String> inputs = new ArrayList<String>();
 		for (String string : position.split(" ")) {
@@ -76,7 +76,7 @@ public class Main {
 			Board board = new Board();
 			Set<Piece> set = Piece.getPieceSet();
 
-			writers[0].write("Make first move.\n");
+			writers[0].write(".\n");
 			writers[0].flush();
 			String firstPiece = readers[0].readLine();
 			Piece piece = Piece.stringToPeace(firstPiece);
@@ -126,8 +126,8 @@ public class Main {
 	}
 
 	private static void writeAction(BufferedWriter writer, Action action) throws IOException {
-		writer.write(action.piece + "\n");
 		writer.write(action.x + " " + action.y + "\n");
+		writer.write(action.piece + "\n");
 		writer.flush();
 	}
 }

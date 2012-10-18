@@ -43,10 +43,6 @@ public class Main {
 		int rounds = 1;
 		boolean quiet = false;
 
-		String[] argss = {
-				"D:\\Dropbox\\Uni\\AI\\quarto.jar -g -p random -p human", 
-				"D:\\Dropbox\\Uni\\AI\\quarto.jar -g -p human -p random",};
-
 		//TODO: rewrite args parsing
 		String command1 = "java " + args[0];
 		String command2 = "java " + args[1];
@@ -88,9 +84,6 @@ public class Main {
 			while (true) {
 				turn++;
 				Action action = getAction(readers[turn%2]);
-				if (!set.remove(action.piece)) {
-					throw new Exception("Piece not in set: " + action.piece.toString() + " " + set.toString());
-				}
 				if (!board.isEmpty(action.x, action.y)) {
 					throw new Exception("Wrong position " + action.x + " " + action.y);				
 				}
@@ -115,6 +108,9 @@ public class Main {
 					p2.destroy();
 					results[2]++;
 					break;
+				}
+				if (!set.remove(action.piece)) {
+					throw new Exception("Piece not in set: " + action.piece.toString() + " " + set.toString());
 				}
 			}
 		}

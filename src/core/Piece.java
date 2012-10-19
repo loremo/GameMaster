@@ -81,7 +81,9 @@ public class Piece {
 	}
 
 	public static Piece stringToPeace(String input) {
-		if(input == null){ throw new RuntimeException("Received null piece.");}
+		//TODO: discuss if the line below is necessary
+		//if(input == null){ throw new RuntimeException("Received null piece.");}
+		if(input == null) return null;
 		String s = input.replaceAll(" ","");
 		boolean square = true;
 		boolean solid = true;

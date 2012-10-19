@@ -79,7 +79,8 @@ public class Main {
 			if(piece == null){ throw new Exception("First player chose " + firstPiece + ". Could not parse.");}
 			writers[1].write(piece.toString() + "\n");
 			writers[1].flush();
-
+			set.remove(piece);
+			
 			int turn = 0;
 			while (true) {
 				turn++;

@@ -44,8 +44,9 @@ public class Main {
 		boolean quiet = false;
 
 		//TODO: rewrite args parsing
-		String command1 = "java " + args[0];
-		String command2 = "java " + args[1];
+		String[] command = new String[2];
+		command[0]= "java " + args[0];
+		command[1] = "java " + args[1];
 
 
 		for (int i = 0; i < args.length; i++) {
@@ -55,13 +56,13 @@ public class Main {
 				quiet = true;
 			}
 		}
-		System.out.println("command1: " + command1);
-		System.out.println("command2: " + command2);
+		System.out.println("command1: " + command[0]);
+		System.out.println("command2: " + command[1]);
 		int[] results = new int[3];
 		for (int i = 0; i < rounds; i++) {
 			
-			Process p1=Runtime.getRuntime().exec(command1); 
-			Process p2=Runtime.getRuntime().exec(command2); 
+			Process p1=Runtime.getRuntime().exec(command[i % 2]); 
+			Process p2=Runtime.getRuntime().exec(command[(i+1) % 2]); 
 			BufferedReader[] readers = new BufferedReader[2];
 			readers[0] = new BufferedReader(new InputStreamReader(p1.getInputStream())); 
 			readers[1] = new BufferedReader(new InputStreamReader(p2.getInputStream())); 
@@ -99,7 +100,7 @@ public class Main {
 					writers[(turn+1)%2].write("Defeat\n");
 					p1.destroy();
 					p2.destroy();
-					results[turn%2]++;
+					results[(i+ (turn%2)) % 2]++;
 					break;
 				}
 				if(set.isEmpty()){
